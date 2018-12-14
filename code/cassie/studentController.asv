@@ -57,7 +57,10 @@ function tau = studentController(t, s, model, params)
             qErr = q(model.actuated_idx)-q0(model.actuated_idx);
             dqErr = dq(model.actuated_idx);
             tau = -kp.*qErr - kd.*dqErr;
-
+            
+        case 4
+            % Force control
+            %   
         otherwise
             warning('Control not recognized.')
     end

@@ -60,7 +60,17 @@ function tau = studentController(t, s, model, params)
             
         case 4
             % Force control
-
+            %   COMMMENTS
+            %   COMMMENTS
+            %   COMMMENTS
+            %   COMMMENTS
+            %   COMMMENTS
+            %   COMMMENTS
+            %   COMMMENTS
+            %   COMMMENTS
+            1+2
+            3+4
+            
         otherwise
             warning('Control not recognized.')
     end
