@@ -15,7 +15,7 @@ x0 = getInitialState(model);
 params = studentParams(model);
 
 % ODE options
-time_inter = [0 5] ;
+time_inter = [0 1] ;
 odeopts = odeset('Events', @falldetect);
 externalForce_fun = @ExternalForce ;
 
@@ -53,7 +53,7 @@ end
 % Animation
 % 3D model animation:
 stateData = getVisualizerState(x_vec, model);
-% vis = CassieVisualizer(t_vec, stateData);
+vis = CassieVisualizer(t_vec, stateData);
 
 disp('Graphing...') ;
 % Plot COM position, base orientation, joint angles

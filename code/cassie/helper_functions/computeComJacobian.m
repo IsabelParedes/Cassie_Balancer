@@ -1,3 +1,3 @@
 function Jcom = computeComJacobian(q, model)
 
-Jcom=COMJac_vel(model, q) ;
+Jcom = COMJac_vel(model, q) ;

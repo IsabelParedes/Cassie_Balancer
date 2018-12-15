@@ -77,13 +77,29 @@ function tau = studentController(t, s, model, params)
                   rleftFront, rleftRear, rrightFront, rrightRear];
                 
             % Pseudoinverse of grasp map
-            pseGc = (Gc')*inv(Gc*Gc');
+            pseGc = (Gc')/(Gc*Gc');
             
             % Wrench
             Fga = wrench_gen(q, dq, q0);
             
             % Contact force
-            fc = pseGc*Fga;     
+            fc = pseGc*Fga; 
+            
+            fc_lf = fc(1:3);
+            fc_lb = fc(4:6);
+            fc_rf = fc(7:9);
+            fc_rb = fc(10:end);
+            
+            % Jacobian
+            [Jlf, Jlb, Jrf, Jrb] = computeFootJacobians(q, dq, model);
+            Jlf = Jlf(4:end, 7:16)';
+            Jlb = Jlb(4:end, 7:16)';
+            Jrf = Jrf(4:end, 7:16)';
+            Jrb = Jrb(4:end, 7:16)';
+            
+            tau = Jlf*fc_lf + Jlb*fc_lb + Jrf*fc_rf + Jrb*fc_rb;
+            
+            disp(tau)
             
         otherwise
             warning('Control not recognized.')
