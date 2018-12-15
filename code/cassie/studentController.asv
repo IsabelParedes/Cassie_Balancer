@@ -9,6 +9,8 @@ function tau = studentController(t, s, model, params)
     % State vector components ID
     q = s(1 : model.n);
     dq = s(model.n+1 : 2*model.n);
+    x0 = getInitialState(model);
+    q0 = x0(1:model.n);
 
     %% Pick control
 
@@ -60,7 +62,8 @@ function tau = studentController(t, s, model, params)
             
         case 4
             % Force control
-            %   
+            wren = wrench_ge
+            
         otherwise
             warning('Control not recognized.')
     end
