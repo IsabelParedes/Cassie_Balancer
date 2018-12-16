@@ -106,7 +106,7 @@ function tau = studentController(t, s, model, params)
             tau_des = min(max(tau_des, -tauMax), tauMax);
 
             % Gains
-            kpTau = 0.2;
+            kpTau = .1;
             kdTau = 0;
             
             if t == 0
@@ -114,12 +114,12 @@ function tau = studentController(t, s, model, params)
                 oldTau = tau;
                 oldT = t;
             else
-                tau = -kpTau*(oldTau - tau_des) - kdTau*(oldTaud);
+                tau = oldTau - kpTau*(oldTau - tau_des) - kdTau*(oldTaud);
             end
             
             
             % Update
-            if (t-oldT > 1e3)  % Every milisecond or so
+            if (t-oldT > 1e-3)  % Every milisecond or so
                 oldTaud = (tau - oldTau)./abs(t - oldT);
                 oldTau = tau;
                 oldT = t;   
