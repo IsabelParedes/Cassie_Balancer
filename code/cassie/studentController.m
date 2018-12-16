@@ -82,7 +82,7 @@ function tau = studentController(t, s, model, params)
             pseGc = (Gc')/(Gc*Gc');
             
             % Wrench
-            Fga = wrench_gen(q, dq, q0);
+            Fga = wrench_genPD(q, dq, q0);
             
             % Contact force
             fc = pseGc*Fga; 
