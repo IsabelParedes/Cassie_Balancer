@@ -1,6 +1,6 @@
 function [wrench] = wrench_genPD(q, dq, q0)
     m = 31; 
-    g = -9.81; 
+    g = 9.81; 
     
     kp_f = 5; 
     kd_f = 1;
@@ -18,30 +18,7 @@ function [wrench] = wrench_genPD(q, dq, q0)
     D_r = kd_t*eye(3);  %3x3 symmetric positive matrix to represent damping
     td_GA = -K_r*q(4:6)-D_r*w;  %desired orientation and rate of change both are zero
        
-%     eul = q(4:6)';  %Euler angle of the body (roll, pitch, yaw in a row vector)
-%     quat = eul2quat(eul,'XYZ');
-%     del = quat(1); eps = quat(2:4)';
-%     
-%     K_r = kp_t*eye(3);  
-%     %3x3 diagnoal matrix to represent stiffness of torsional spring
-%     %controlling roll pitch and yaw
-%     
-%     norEps = norm(eps);
-%     if norEps == 0 
-%         norEps = 1; 
-%     end
-%     
-%     t_r = -2*(del*eye(3) + eps./norEps)*K_r*eps;
-%     
-%     R_wb = eul2rotm(eul,'XYZ');
-%     
-%     D_r = kd_t*eye(3);  %3x3 symmetric positive matrix to represent damping
-%     w = dq(4:6);  %small angle approximation  
-%     
-%     td_GA = R_wb*(t_r - D_r*(w - zeros(3,1))); 
-%     %R_wb is transformation matrix from body to world
-%     %w_d = zeros(3,1)
-    
+
     wrench = [fd_GA; td_GA];
 
 

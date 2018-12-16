@@ -13,7 +13,7 @@ x0 = getInitialState(model);
 params = studentParams(model);
 
 % ODE options
-time_inter = [0 0.5] ;
+time_inter = [0 5] ;
 odeopts = odeset('Events', @falldetect);
 externalForce_fun = @ExternalForce ;
 

@@ -101,34 +101,9 @@ function tau = studentController(t, s, model, params)
             
             tau_des = Jlf*fc_lf + Jlb*fc_lb + Jrf*fc_rf + Jrb*fc_rb;
             
-%             % Saturation control
-%             tauMax = repmat([25*4.5; 25*4.5; 16*12.2; 16*12.2; 50*0.9], 2, 1);
-%             tau_des = min(max(tau_des, -tauMax), tauMax);
-            tau = tau_des;
+            tau = -tau_des;
 
-%             % Gains
-%             kpTau = .1;
-%             kdTau = 0;
-            
-%             if t == 0
-%                 tau = tau_des;
-%                 oldTau = tau;
-%                 oldT = t;
-%             else
-%                 tau = oldTau - kpTau*(oldTau - tau_des) - kdTau*(oldTaud);
-%             end
-%             
-%             
-%             % Update
-%             if (t-oldT > 1e-3)  % Every milisecond or so
-%                 oldTaud = (tau - oldTau)./abs(t - oldT);
-%                 oldTau = tau;
-%                 oldT = t;   
-%             end
-
-            disp([tau_des])
-            disp('Next')
-            
+           
         otherwise
             warning('Control not recognized.')
     end
