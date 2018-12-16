@@ -86,43 +86,41 @@ function tau = studentController(t, s, model, params)
               
             % Only contact points
             contact = ([leftFront(3), leftRear(3), rightFront(3), rightRear(3)]<0.01);
-            if sum(contact) == 0
-                tau = zeros(10,1);
-            else
-                Gc = cell2mat(Gc(contact));
+            if sum(contact == 0)
+                tau = 
+            Gc = cell2mat(Gc(contact));
 
-
-                % Pseudoinverse of grasp map
-    %             pseGc = (Gc')/(Gc*Gc');
-                pseGc = pinv(Gc);
-
-                % Wrench
-                Fga = wrench_genPD(q, dq, q0);
-
-                % Contact force
-                fc = pseGc*Fga; 
-                fc = reshape(fc, [3, sum(contact)]);   % each contact force as column vectors 
-
-                % Distribute forces (points not in contact are zero)
-                all_fc = zeros(3,4);
-                all_fc(:,contact) = fc;
-
-                fc_lf = all_fc(:,1);
-                fc_lb = all_fc(:,2);
-                fc_rf = all_fc(:,3);
-                fc_rb = all_fc(:,4);
-
-                % Jacobian
-                [Jlf, Jlb, Jrf, Jrb] = computeFootJacobians(q, dq, model);
-                Jlf = Jlf(4:end, 7:16)';
-                Jlb = Jlb(4:end, 7:16)';
-                Jrf = Jrf(4:end, 7:16)';
-                Jrb = Jrb(4:end, 7:16)';
-
-                tau_des = Jlf*fc_lf + Jlb*fc_lb + Jrf*fc_rf + Jrb*fc_rb;
-
-                tau = -tau_des;
-            end
+                
+            % Pseudoinverse of grasp map
+%             pseGc = (Gc')/(Gc*Gc');
+            pseGc = pinv(Gc);
+            
+            % Wrench
+            Fga = wrench_genPD(q, dq, q0);
+            
+            % Contact force
+            fc = pseGc*Fga; 
+            fc = reshape(fc, [3, sum(contact)]);   % each contact force as column vectors 
+            
+            % Distribute forces (points not in contact are zero)
+            all_fc = zeros(3,4);
+            all_fc(:,contact) = fc;
+            
+            fc_lf = all_fc(:,1);
+            fc_lb = all_fc(:,2);
+            fc_rf = all_fc(:,3);
+            fc_rb = all_fc(:,4);
+            
+            % Jacobian
+            [Jlf, Jlb, Jrf, Jrb] = computeFootJacobians(q, dq, model);
+            Jlf = Jlf(4:end, 7:16)';
+            Jlb = Jlb(4:end, 7:16)';
+            Jrf = Jrf(4:end, 7:16)';
+            Jrb = Jrb(4:end, 7:16)';
+            
+            tau_des = Jlf*fc_lf + Jlb*fc_lb + Jrf*fc_rf + Jrb*fc_rb;
+            
+            tau = -tau_des;
             
 
            
