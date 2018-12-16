@@ -1,4 +1,4 @@
-close all ; clear; clc;
+% close all ; clear; clc;
 
 % add paths
 startup;
