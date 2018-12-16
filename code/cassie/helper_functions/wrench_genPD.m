@@ -11,7 +11,12 @@ function [wrench] = wrench_genPD(q, dq, q0)
     fd_r = -kp_f*(q(1:3)-q0(1:3)) - kd_f*dq(1:3) ;  
     fd_GA = [0, 0, m*g]' + fd_r;  %total force component in the wrench
     
-    w = dq(4:6);  %small angle approximation
+%     x_R = dq(4:6); x = q(4); y = q(5); 
+%     E_R = [1,   0,       sin(y);
+%            0, cos(x), -cos(y)*sin(x);
+%            0, sin(x), cos(x)*cos(y)];
+%     w = E_R*x_R;  %mapping from rate of change of Euler angle to angular velocity
+    w = dq(4:6);
     K_r = kp_t*eye(3);
     %3x3 diagnoal matrix to represent stiffness of torsional spring
     %controlling roll pitch and yaw
