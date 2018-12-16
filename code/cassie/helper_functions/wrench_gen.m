@@ -1,7 +1,11 @@
 
 %% Generation of Stabilizing Wrench
 function [wrench] = wrench_gen(q, dq, q0)
-    m = 31; g = -9.81; kp_f = 200 ; kd_f = 20 ;
+    m = 31; 
+    g = -9.81; 
+    
+    kp_f = 5 ; 
+    kd_f = 1 ;
 
     %reaction force to correct translational position deviation
     fd_r = -kp_f*(q(1:3)-q0(1:3)) - kd_f*dq(1:3) ;  
@@ -32,3 +36,9 @@ function [wrench] = wrench_gen(q, dq, q0)
     %w_d = zeros(3,1)
     
     wrench = [fd_GA; td_GA];
+
+
+
+    
+
+

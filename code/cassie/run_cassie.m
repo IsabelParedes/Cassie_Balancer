@@ -1,5 +1,5 @@
 function run_cassie()
-close all ;
+close all ; clear; clc;
 
 % add paths
 startup;
@@ -10,12 +10,11 @@ load('cassie_model.mat') ;
 % Initial configuration
 x0 = getInitialState(model);
 
-
 % Get STUDENT Control Parameters
 params = studentParams(model);
 
 % ODE options
-time_inter = [0 1] ;
+time_inter = [0 5] ;
 odeopts = odeset('Events', @falldetect);
 externalForce_fun = @ExternalForce ;
 
@@ -43,7 +42,7 @@ disp('Computing control signals...') ;
 xdot_vec = zeros(size(x_vec)) ;
 tau_vec = zeros(length(t_vec), 20) ;
 for j=1:length(t_vec)
-    [xdot_,tau_] = cassie_eom(t_vec(j),x_vec(j,:)', model,params,externalForce_fun) ;
+    [xdot_, tau_] = cassie_eom(t_vec(j),x_vec(j,:)', model, params, externalForce_fun) ;
     xdot_vec(j,:) = xdot_' ;
     tau_vec(j,:) = tau_' ;
 end
@@ -58,7 +57,7 @@ vis = CassieVisualizer(t_vec, stateData);
 disp('Graphing...') ;
 % Plot COM position, base orientation, joint angles
 figure() ; 
-    subplot(3,1,1);plot(t_vec, r_com) ;grid ; title('com positions x-y-z') ;hold; legend('x','y','z') ;
+    subplot(3,1,1); plot(t_vec, r_com) ;grid ; title('com positions x-y-z') ;hold; legend('x','y','z') ;
     subplot(3,1,2); plot(t_vec, x_vec(:,4:6)) ; grid ; title('base angles') ; 
     subplot(3,1,3); plot(t_vec, x_vec(:,7:model.n)) ; grid ; title('joint angles') ; 
     

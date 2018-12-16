@@ -6,6 +6,8 @@ function tau = studentController(t, s, model, params)
     % params - user defined parameters in studentParams.m
     % tau - 10x1 vector of joint torques
 
+    global oldTau oldTaud oldT
+    
     % State vector components ID
     q = s(1 : model.n);
     dq = s(model.n+1 : 2*model.n);
@@ -97,9 +99,34 @@ function tau = studentController(t, s, model, params)
             Jrf = Jrf(4:end, 7:16)';
             Jrb = Jrb(4:end, 7:16)';
             
-            tau = Jlf*fc_lf + Jlb*fc_lb + Jrf*fc_rf + Jrb*fc_rb;
+            tau_des = Jlf*fc_lf + Jlb*fc_lb + Jrf*fc_rf + Jrb*fc_rb;
             
-            disp(tau)
+            % Saturation control
+            tauMax = repmat([25*4.5; 25*4.5; 16*12.2; 16*12.2; 50*0.9], 2, 1);
+            tau_des = min(max(tau_des, -tauMax), tauMax);
+
+            % Gains
+            kpTau = 0.2;
+            kdTau = 0;
+            
+            if t == 0
+                tau = tau_des;
+                oldTau = tau;
+                oldT = t;
+            else
+                tau = -kpTau*(oldTau - tau_des) - kdTau*(oldTaud);
+            end
+            
+            
+            % Update
+            if (t-oldT > 1e3)  % Every milisecond or so
+                oldTaud = (tau - oldTau)./abs(t - oldT);
+                oldTau = tau;
+                oldT = t;   
+            end
+
+            disp([tau_des, tau])
+            disp('Next')
             
         otherwise
             warning('Control not recognized.')

@@ -17,7 +17,7 @@ x0(model.jidx.toe_joint_right) = -1.6 ;
 x0(model.jidx.ankle_joint_left) = deg2rad(13) - x0(model.jidx.knee_joint_left) ;
 x0(model.jidx.ankle_joint_right) = deg2rad(13) - x0(model.jidx.knee_joint_right) ;
 
-% correction for z
+% Correction for z
 ground_pos = X_to_r(bodypos(model, model.idx.foot1, x0)) ;
 x0(3) = -ground_pos(3) ;
 
@@ -32,4 +32,3 @@ x0(3) = x0(3) - foot_pos_min ;
 % Initialisation for ground model
 x0((2*model.NB+1) : (2*model.NB + 2*length(model.gc.body))) = 0 ;
 
-end
