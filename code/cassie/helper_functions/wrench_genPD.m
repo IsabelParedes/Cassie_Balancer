@@ -16,7 +16,7 @@ function [wrench] = wrench_genPD(q, dq, q0)
     %3x3 diagnoal matrix to represent stiffness of torsional spring
     %controlling roll pitch and yaw
     D_r = kd_t*eye(3);  %3x3 symmetric positive matrix to represent damping
-    td_GA = -K_r*q(4:6)-D_r*w;
+    td_GA = -K_r*q(4:6)-D_r*w;  %desired orientation and rate of change both are zero
        
 %     eul = q(4:6)';  %Euler angle of the body (roll, pitch, yaw in a row vector)
 %     quat = eul2quat(eul,'XYZ');

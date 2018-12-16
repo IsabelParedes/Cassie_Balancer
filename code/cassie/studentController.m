@@ -125,8 +125,8 @@ function tau = studentController(t, s, model, params)
                 oldT = t;   
             end
 
-            disp([tau_des, tau])
-            disp('Next')
+            %disp([tau_des, tau])
+            %disp('Next')
             
         otherwise
             warning('Control not recognized.')
