@@ -32,6 +32,7 @@ function fc = minFC(Gc, pseGc, Fga)
     % Do we need to optimize?
     
     need = sum(A*x0 <= b);
+    need = 0;  % Always optimize
     
     if need == 20
         fc = x0;

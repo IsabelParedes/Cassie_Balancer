@@ -7,6 +7,13 @@ function [wrench] = wrench_genPD(t, q, dq, q0)
     kp_t = 3e3;
     kd_t = 1e3;
     
+%     % Desired height
+%     q0(3) = -0.2503*t + 1.0006;
+%     
+%     if q0(3) < 0.5
+%         q0(3) = 0.5;
+%     end
+    
 
 
     %reaction force to correct translational position deviation

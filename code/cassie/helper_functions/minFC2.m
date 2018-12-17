@@ -1,4 +1,4 @@
-function fc = minFC(Gc, pseGc, Fga)
+function fc = minFC2(Gc, pseGc, Fga)
 
     u = 0.75/sqrt(2);   % fric coef
     
@@ -24,6 +24,7 @@ function fc = minFC(Gc, pseGc, Fga)
            0  0  0  0  0  0  0  0  0   0  -1  -u];
        
     b = zeros(16,1);
+    
     
     x = optimvar('x', 12);
     
@@ -52,9 +53,7 @@ function fc = minFC(Gc, pseGc, Fga)
     % Optimizer
     problem = prob2struct(prob);
     problem.x0 = x0;
-    
-    options = optimoptions('quadprog', 'Display', 'off');
-    
+       
     [fc, ~] = quadprog(problem);
     
     

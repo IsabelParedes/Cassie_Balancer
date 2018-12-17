@@ -31,7 +31,7 @@ function tau = studentController(t, s, model, params)
 
         case 3
             % [Control #3] High Gain Joint PD with individual gains
-            % Highest score with these gains is 93.0101
+            % THESE GAINS ARE TOO HIGH
             kp = [1e3;      % abduction
                   1e3;
                   500;      % rotation
@@ -84,7 +84,7 @@ function tau = studentController(t, s, model, params)
             
             % Contact force
 %             fc = pseGc*Fga;
-            fc = minFC2(Gc, pseGc, Fga);
+            fc = minFC(Gc, pseGc, Fga);
             
             fc_lf = fc(1:3);
             fc_lb = fc(4:6);
