@@ -6,6 +6,7 @@ function tau = studentController(t, s, model, params)
     % params - user defined parameters in studentParams.m
     % tau - 10x1 vector of joint torques
 
+    global oldTau oldTaud oldT
     
     % State vector components ID
     q = s(1 : model.n);
@@ -84,7 +85,7 @@ function tau = studentController(t, s, model, params)
             Fga = wrench_genPD(q, dq, q0);
             
             % Contact force
-            fc = minFC(Gc, pseGc, Fga); 
+            fc = pseGc*Fga; 
             
             fc_lf = fc(1:3);
             fc_lb = fc(4:6);
