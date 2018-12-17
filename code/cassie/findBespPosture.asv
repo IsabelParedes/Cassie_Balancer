@@ -1,0 +1,59 @@
+load('mat\cassie_model.mat') ;
+
+bestP = findPosture(model);
+
+bestP = bestP';
+
+function pos = findPosture(model)
+
+
+    x0 = getInitialState(model);
+    q0 = x0(1:model.n);             % 20x1
+    [q1, q2, q3, q4] = computeFootPositions(q0, model);
+
+    lb = -ones(4,1).*pi;
+    ub = ones(4,1).*pi;
+    
+    lb(1) = 0.3;
+    ub(1) = q0(3);
+
+    nvar = 4;   % z, hip pitch, knee, toe
+    options = optimoptions('particleswarm', 'Display', 'iter');
+    posX = particleswarm(@fun, nvar, lb, ub, options);
+    
+    
+
+
+    function val = fun(x)
+
+        height = x(1);
+        
+        % Reconstruct
+        q = q0;
+        q(3) = x(1);                  % height
+        q(11:12) = [x(2); x(2)];      % hip pitch
+        q(13:14) = [x(3); x(3)];      % knee joint
+        q(17) = deg2rad(13) - q(13);  % ankle joint
+        q(18) = deg2rad(13) - q(14);
+        q(19:20) = [x(4); x(4)];      % toe joint
+
+         
+        [p1, p2, p3, p4] = computeFootPositions(x, model);
+        
+        val = [height;
+               p1 - q1;
+               p2 - q2; 
+               p3 - q3;
+               p4 - q4;
+               6*p1(3);
+               6*p2(3);
+               6*p3(3);
+               6*p4(3)];
+        
+        val = sum(val.^2);
+        
+    end
+
+    disp('Helo')
+
+end

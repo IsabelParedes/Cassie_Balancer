@@ -6,31 +6,33 @@ function tau = studentController(t, s, model, params)
     % params - user defined parameters in studentParams.m
     % tau - 10x1 vector of joint torques
 
-    
+    global control
     % State vector components ID
     q = s(1 : model.n);
     dq = s(model.n+1 : 2*model.n);
-    x0 = getInitialState(model);
+    x0 = getInitialState(model);    
+
     q0 = x0(1:model.n);
 
-    %% Pick control
+%     params = studentParams(model);
+%     q0 = params.bestPos;
+    
+    
 
-    control = 4;    % 1-3
+    %% Pick control
 
     switch control
         case 1
             % [Control #1] zero control
             tau = zeros(10,1);
 
-        case 2
+        case 'PD'
             % [Control #2] High Gain Joint PD control on all actuated joints
-            kp = 500;
-            kd = 100;
-            x0 = getInitialState(model);
-            q0 = x0(1:model.n);
+            kp = 300;
+            kd = 70;
             tau = -kp*(q(model.actuated_idx)-q0(model.actuated_idx)) - kd*dq(model.actuated_idx);
 
-        case 3
+        case 'highPD'
             % [Control #3] High Gain Joint PD with individual gains
             % Highest score with these gains is 93.0101
             kp = [1e3;      % abduction
@@ -55,13 +57,11 @@ function tau = studentController(t, s, model, params)
                   200;      % toe
                   200];
 
-            x0 = getInitialState(model);
-            q0 = x0(1:model.n);
             qErr = q(model.actuated_idx)-q0(model.actuated_idx);
             dqErr = dq(model.actuated_idx);
             tau = -kp.*qErr - kd.*dqErr;
             
-        case 4
+        case 'force'
             % FORCE control
             
             % Grasp/Contact Map
@@ -81,10 +81,11 @@ function tau = studentController(t, s, model, params)
             pseGc = (Gc')/(Gc*Gc');
             
             % Wrench
-            Fga = wrench_genPD(q, dq, q0);
+            Fga = wrench_genPD(t, q, dq, q0);
             
             % Contact force
-            fc = minFC(Gc, pseGc, Fga); 
+            fc = pseGc*Fga;
+%             fc = minFC(Gc, pseGc, Fga); 
             
             fc_lf = fc(1:3);
             fc_lb = fc(4:6);

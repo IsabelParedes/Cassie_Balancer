@@ -33,16 +33,16 @@ function fc = minFC(Gc, pseGc, Fga)
     
     need = sum(A*x0 <= b);
     
-    if need == 20
+%     if need == 20
         fc = x0;
-    else
-        Aeq = [];
-        beq = [];
-        lb = [];
-        ub = [];
-        options = optimoptions(@lsqlin, 'Display', 'off', 'MaxIterations', 100);
-
-        [fc, ~] = lsqlin(Gc, Fga, A, b, Aeq, beq, lb, ub, x0, options);
-    end
+%     else
+%         Aeq = [];
+%         beq = [];
+%         lb = [];
+%         ub = [];
+%         options = optimoptions(@lsqlin, 'Display', 'off', 'MaxIterations', 100);
+% 
+%         [fc, ~] = lsqlin(Gc, Fga, A, b, Aeq, beq, lb, ub, x0, options);
+%     end
     
     

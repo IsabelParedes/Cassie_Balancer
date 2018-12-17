@@ -1,12 +1,34 @@
 function params = studentParams(model)
     % define any parameters here 
     % params - struct
-    global oldTau oldTaud oldT
+    global control
     
-    oldTau = zeros(10,1);  % Initial torque value
-    oldTaud = zeros(10,1); % Initial torque change per time
-    oldT = 0;              % Initial time
+    control = 'PD';
+    
+    params.control = control;
 
-    params.tau = oldTau;
-    params.taud = oldTaud;
-    params.t = oldT;
+    
+    params.bestPos =  [     0
+                            0
+                          0.6
+                            0
+                            0
+                            0
+                            0
+                            0
+                            0
+                            0
+                       1.0197
+                       1.0197
+                      -2.2525
+                      -2.2525
+                            0
+                            0
+                       2.4794
+                       2.4794
+                      -2.1195
+                      -2.1195];
+                  
+                  
+    
+
