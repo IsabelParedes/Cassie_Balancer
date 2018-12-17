@@ -84,7 +84,7 @@ function tau = studentController(t, s, model, params)
             
             % Contact force
 %             fc = pseGc*Fga;
-            fc = minFC(Gc, pseGc, Fga);
+            fc = minFC2(Gc, pseGc, Fga);
             
             fc_lf = fc(1:3);
             fc_lb = fc(4:6);
