@@ -15,7 +15,7 @@ params = studentParams(model);
 % ODE options
 time_inter = [0 5] ;
 odeopts = odeset('Events', @falldetect);
-externalForce_fun = @ExternalForce ;
+externalForce_fun = @ExternalForce;
 
 %% Simulation 
 disp('Simulating...') ;

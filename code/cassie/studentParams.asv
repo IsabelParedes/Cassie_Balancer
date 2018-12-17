@@ -1,7 +1,0 @@
-function params = studentParams(model)
-    % define any parameters here 
-    % params - struct
-    global tau
-    
-
-    params = struct();

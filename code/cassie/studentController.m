@@ -77,13 +77,14 @@ function tau = studentController(t, s, model, params)
                   rleftFront, rleftRear, rrightFront, rrightRear];
                 
             % Pseudoinverse of grasp map
-            pseGc = (Gc')/(Gc*Gc');
+            pseGc = pinv(Gc);
             
             % Wrench
-            Fga = wrench_genPD(q, dq, q0);
+            Fga = wrench_genPD(t, q, dq, q0);
             
             % Contact force
-            fc = pseGc*Fga; 
+%             fc = pseGc*Fga;
+            fc = minFC(Gc, pseGc, Fga);
             
             fc_lf = fc(1:3);
             fc_lb = fc(4:6);

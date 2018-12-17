@@ -1,4 +1,4 @@
-function [wrench] = wrench_genPD(q, dq, q0)
+function [wrench] = wrench_genPD(t, q, dq, q0)
     m = 31; 
     g = 9.81; 
     
@@ -6,6 +6,8 @@ function [wrench] = wrench_genPD(q, dq, q0)
     kd_f = 2.5e3;
     kp_t = 3e3;
     kd_t = 1e3;
+    
+
 
     %reaction force to correct translational position deviation
     fd_r = -kp_f*(q(1:3)-q0(1:3)) - kd_f*dq(1:3) ;  
