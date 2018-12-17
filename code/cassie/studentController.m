@@ -5,8 +5,6 @@ function tau = studentController(t, s, model, params)
     % model - struct containing robot properties
     % params - user defined parameters in studentParams.m
     % tau - 10x1 vector of joint torques
-
-    global oldTau oldTaud oldT
     
     % State vector components ID
     q = s(1 : model.n);
