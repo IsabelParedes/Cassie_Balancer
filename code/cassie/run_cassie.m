@@ -21,7 +21,7 @@ externalForce_fun = @ExternalForce ;
 disp('Simulating...') ;
 tic
 
-[t_vec, x_vec] = ode15s( @cassie_eom, time_inter, x0, odeopts, model, params, externalForce_fun) ;
+[t_vec, x_vec] = ode45( @cassie_eom, time_inter, x0, odeopts, model, params, externalForce_fun) ;
 
 toc
 disp(['Simulated for ' num2str(t_vec(end)), 's'])
